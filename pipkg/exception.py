@@ -1,0 +1,3 @@
+
+class PipkgException(Exception):
+    pass
