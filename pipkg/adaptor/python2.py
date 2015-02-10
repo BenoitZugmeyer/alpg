@@ -15,24 +15,20 @@ def is_sourcefile(url):
 
 
 def get_source(data):
-    source = None
-    md5sum = None
-
     raw_urls = client.release_urls(data['name'], data['version'])
     if raw_urls:
         for url in raw_urls:
-            if is_sourcefile(url['url']):
-                source = url['url']
-                md5sum = url.get('md5_digest')
-                break
+            if url['packagetype'] in ('sdist', 'bdist_wheel') and \
+                    'py2' in url['python_version']:
+                return url
 
-    if not source and is_sourcefile(data.get('download_url')):
-        source = data['download_url']
+    if data.get('download_url'):
+        return {
+            'url': data['download_url'],
+            'packagetype': 'sdist'
+        }
 
-    if not source:
-        raise PipkgException("Couldn't find any suitable source")
-
-    return source, md5sum or 'SKIP'
+    raise PipkgException("Couldn't find any suitable source")
 
 
 def get_license(data):
@@ -62,33 +58,38 @@ def make(package):
         raise PipkgException('PyPi did not return any information '
                              'for version %s' % version)
 
-    source, md5sum = get_source(data)
+    source = get_source(data)
 
     output_directory = '%s-%s' % (data['name'], data['version'])
     egg_path = '%s.egg-info' % data['name'].lower()
 
-    return Pkgbuild(
+    pkgbuild = Pkgbuild(
         pkgname='python2-%s' % data['name'].lower(),
         pkgver=data['version'],
         pkgdesc=data['summary'],
         arch=(get_arch(data),),
         license=(get_license(data),),
         depends=('python2', 'python2-setuptools'),
-        source=(source,),
-        md5sums=(md5sum,),
+        source=(source['url'],),
+        md5sums=(source.get('md5_digest') or 'SKIP',),
+    )
 
-        prepare=r'''
+    if source['packagetype'] == 'bdist_wheel':
+        print('WHEEL')
+
+    else:
+        pkgbuild.prepare = r'''
         find "$srcdir/{output_directory}" -name '*.py' | \
             xargs sed -i "s|#!/usr/bin/env python$|#!/usr/bin/env python2|"
         '''.format(**locals()),
 
-        build=r'''
+        pkgbuild.build = r'''
         cd {output_directory}
 
         python2 setup.py build
         '''.format(**locals()),
 
-        package=r'''
+        pkgbuild.package = r'''
         cd {output_directory}
 
         depends=($(cat src/{egg_path}/requires.txt |
@@ -96,4 +97,5 @@ def make(package):
 
         python2 setup.py install --root="$pkgdir" --optimize=1
         '''.format(**locals()),
-    )
+
+    return pkgbuild
