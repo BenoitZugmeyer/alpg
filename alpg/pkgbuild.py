@@ -153,7 +153,7 @@ class Pkgbuild(object, metaclass=PkgbuildMeta):
                 if line:
                     yield line
 
-        return '\n'.join(iterlines())
+        return '\n'.join(iterlines()) + '\n'
 
     def __setattr__(self, attr, value):
         if not hasattr(self, attr):
