@@ -1,4 +1,5 @@
 
+from tests.util import read_fixture
 import alpg.adaptor.nodejs as nodejs
 
 
@@ -25,3 +26,8 @@ def test_licenses():
         infos(license=None,
               licenses={'type': 'MIT'}))
     assert pkg.license == ('MIT',)
+
+
+def test_pkgfile_generation():
+    pkg = nodejs.make("pass-web")
+    assert str(pkg) == read_fixture("pass-web/PKGBUILD")
