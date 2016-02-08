@@ -13,7 +13,6 @@ def makepkgbuild_from_infos(infos):
     assert 'name' in infos
     assert 'version' in infos
     assert 'description' in infos
-    assert 'homepage' in infos
     assert 'dist' in infos
 
     if infos.get('license'):
@@ -29,7 +28,7 @@ def makepkgbuild_from_infos(infos):
         pkgname='nodejs-%s' % infos['name'],
         pkgver=infos['version'],
         pkgdesc=infos['description'],
-        url=infos['homepage'],
+        url=infos.get('homepage'),
         license=license,
         depends=('nodejs',),
         source=(infos['dist']['tarball'],),
