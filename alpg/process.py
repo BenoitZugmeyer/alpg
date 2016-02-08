@@ -1,7 +1,7 @@
 import subprocess
 import shlex
 
-from pipkg.exception import PipkgException
+from alpg.exception import PipkgException
 
 
 class ProcessError(PipkgException):

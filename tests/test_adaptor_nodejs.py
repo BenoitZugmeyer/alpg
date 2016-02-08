@@ -1,6 +1,6 @@
 import unittest
 
-import pipkg.adaptor.nodejs as nodejs
+import alpg.adaptor.nodejs as nodejs
 
 
 def infos(**kwargs):

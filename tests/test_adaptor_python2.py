@@ -1,6 +1,6 @@
 import unittest
 
-import pipkg.adaptor.python2 as python2
+import alpg.adaptor.python2 as python2
 
 
 class MockClient:

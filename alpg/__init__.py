@@ -3,7 +3,7 @@ import sys
 
 import click
 
-from pipkg.exception import PipkgException
+from alpg.exception import PipkgException
 
 
 def make_package(pkgbuild, install):

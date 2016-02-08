@@ -1,7 +1,7 @@
 import json
 
-from pipkg.pkgbuild import Pkgbuild
-from pipkg.process import run
+from alpg.pkgbuild import Pkgbuild
+from alpg.process import run
 
 
 def make(package):

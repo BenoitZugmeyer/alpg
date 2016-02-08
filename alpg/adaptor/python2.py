@@ -1,8 +1,8 @@
 from xmlrpc.client import ServerProxy
 import re
 
-from pipkg.pkgbuild import Pkgbuild
-from pipkg.exception import PipkgException
+from alpg.pkgbuild import Pkgbuild
+from alpg.exception import PipkgException
 
 client = ServerProxy('http://pypi.python.org/pypi')
 

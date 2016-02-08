@@ -1,7 +1,7 @@
 import shlex
 import textwrap
 
-from pipkg.exception import PipkgException
+from alpg.exception import PipkgException
 
 
 class PkgbuildError(PipkgException):
