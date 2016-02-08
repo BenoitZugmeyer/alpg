@@ -16,7 +16,7 @@ setup(name='alpg',
       license='Expat',
       packages=['alpg'],
       install_requires=[
-          'Click>=3,<4',
+          'Click>=6,<7',
       ],
       entry_points={
           'console_scripts': ['alpg=alpg.__init__:cli'],
