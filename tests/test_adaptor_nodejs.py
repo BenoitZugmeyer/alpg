@@ -1,4 +1,3 @@
-import unittest
 
 import alpg.adaptor.nodejs as nodejs
 
@@ -16,14 +15,13 @@ def infos(**kwargs):
     return infos
 
 
-class TestAdaptorNodejs(unittest.TestCase):
+def test_license():
+    pkg = nodejs.makepkgbuild_from_infos(infos())
+    assert pkg.license == ('MIT',)
 
-    def test_license(self):
-        pkg = nodejs.makepkgbuild_from_infos(infos())
-        self.assertEqual(pkg.license, ('MIT',))
 
-    def test_licenses(self):
-        pkg = nodejs.makepkgbuild_from_infos(
-            infos(license=None,
-                  licenses={'type': 'MIT'}))
-        self.assertEqual(pkg.license, ('MIT',))
+def test_licenses():
+    pkg = nodejs.makepkgbuild_from_infos(
+        infos(license=None,
+              licenses={'type': 'MIT'}))
+    assert pkg.license == ('MIT',)

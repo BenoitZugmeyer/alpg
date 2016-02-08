@@ -21,4 +21,6 @@ setup(name='alpg',
       entry_points={
           'console_scripts': ['alpg=alpg.__init__:cli'],
       },
+      setup_requires=['pytest-runner'],
+      tests_require=['pytest'],
       zip_safe=True)

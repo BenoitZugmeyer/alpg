@@ -1,5 +1,3 @@
-import unittest
-
 import alpg.adaptor.python2 as python2
 
 
@@ -81,17 +79,15 @@ class MockClient:
 python2.client = MockClient()
 
 
-class TestAdaptorNodejs(unittest.TestCase):
-
-    def test_django(self):
-        pkg = python2.make('Django')
-        self.assertEqual(pkg.pkgname, 'python2-django')
-        self.assertEqual(pkg.pkgver, '1.8a1')
-        self.assertEqual(pkg.license, ('BSD',))
-        self.assertEqual(pkg.source, (
-            'https://pypi.python.org/packages/py2.py3/D/Django/'
-            'Django-1.8a1-py2.py3-none-any.whl',))
-        self.assertEqual(pkg.md5sums, ('f7619792a8d8028c5be10f7d06a444ca',))
-        # TODO implement wheel suport
-        # self.assertTrue(pkg.prepare)
-        # self.assertTrue('# Rewrite python binary references' in pkg.prepare)
+def test_django():
+    pkg = python2.make('Django')
+    assert pkg.pkgname == 'python2-django'
+    assert pkg.pkgver == '1.8a1'
+    assert pkg.license == ('BSD',)
+    assert pkg.source == (
+        'https://pypi.python.org/packages/py2.py3/D/Django/'
+        'Django-1.8a1-py2.py3-none-any.whl',)
+    assert pkg.md5sums == ('f7619792a8d8028c5be10f7d06a444ca',)
+    # TODO implement wheel suport
+    # assert pkg.prepare
+    # assert '# Rewrite python binary references' in pkg.prepare
