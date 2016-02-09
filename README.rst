@@ -5,6 +5,17 @@ ArchLinux Package Generator
 Generate PKGBUILDs from various package managers.
 
 
+Install
+=======
+
+::
+
+    bash <( curl https://raw.githubusercontent.com/BenoitZugmeyer/alpg/master/install.sh )
+
+Don't worry, it will be installed through pacman.  Check
+`install.sh <install.sh>`_ if you are unsure.
+
+
 Usage
 =====
 
