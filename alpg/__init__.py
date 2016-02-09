@@ -29,22 +29,41 @@ def make_package(pkgbuild, install):
         subprocess.check_call(args, env=env)
 
 
-@click.command()
-@click.argument('type')
-@click.argument('name')
-@click.option('--maintainer')
-@click.option('--contributor', multiple=True)
-@click.option('--make', '-m', is_flag=True)
-@click.option('--install', '-i', is_flag=True)
-def cli(type, name, maintainer, contributor, make, install):
+@click.command(
+    help="""
+        Generate PKGBUILDs from various package managers.  <pkgtype> should be
+        a valid package type (see below), and <pkgname> the name of the package
+        to generate the PKGBUILD for.
+
+        \b
+        Supported package types:
+            nodejs (through npm)
+            python2 (through pip2)
+    """)
+@click.argument('pkgtype', metavar='<pkgtype>')
+@click.argument('pkgname', metavar='<pkgname>')
+@click.option('--maintainer',
+              help="Prepend the maintainer as a comment to the PKGBUILD.")
+@click.option('--contributor',
+              multiple=True,
+              help="Prepend the contributor as a comment to the PKGBUILD. May "
+              "be used multiple times.")
+@click.option('--make', '-m',
+              is_flag=True,
+              help="Instead of printing the PKGBUILD, build it with makepkg")
+@click.option('--install', '-i',
+              is_flag=True,
+              help="Instead of printing the PKGBUILD, build and install it "
+              "with makepkg")
+def cli(pkgtype, pkgname, maintainer, contributor, make, install):
     try:
-        module = importlib.import_module('.adaptor.%s' % type, __package__)
+        module = importlib.import_module('.adaptor.%s' % pkgtype, __package__)
     except ImportError as e:
-        click.echo("Can't handle type %s (%s)" % (type, e))
+        click.echo("Can't handle type %s (%s)" % (pkgtype, e))
         sys.exit(1)
 
     try:
-        pkgbuild = module.make(name)
+        pkgbuild = module.make(pkgname)
     except PipkgException as e:
         click.echo(e)
         sys.exit(1)

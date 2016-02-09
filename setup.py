@@ -8,7 +8,7 @@ def readme():
 
 setup(name='alpg',
       version='1.0.dev0',
-      description='',
+      description='ArchLinux Package Generator',
       long_description=readme(),
       url='',
       author='Benoît Zugmeyer',
