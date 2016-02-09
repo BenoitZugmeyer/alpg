@@ -1,5 +1,5 @@
 
-from tests.util import read_fixture
+from tests.util import read_fixture, read_fixture_json
 import alpg.adaptor.nodejs as nodejs
 
 
@@ -29,5 +29,6 @@ def test_licenses():
 
 
 def test_pkgfile_generation():
-    pkg = nodejs.make("pass-web")
+    infos = read_fixture_json("npm-show-result.json")
+    pkg = nodejs.makepkgbuild_from_infos(infos)
     assert str(pkg) == read_fixture("pass-web/PKGBUILD")
