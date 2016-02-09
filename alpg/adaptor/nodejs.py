@@ -35,6 +35,7 @@ def makepkgbuild_from_infos(infos):
         url=infos.get('homepage'),
         license=license,
         depends=('nodejs',),
+        makedepends=('npm',),
         source=(source_url,),
         sha1sums=(infos['dist']['shasum'],),
         noextract=(source_basename,),

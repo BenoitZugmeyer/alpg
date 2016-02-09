@@ -139,6 +139,8 @@ class Pkgbuild(object, metaclass=PkgbuildMeta):
     license = Multi()
     depends = Multi()
     optdepends = Multi()
+    makedepends = Multi()
+
     source = Multi()
     noextract = Multi()
 
