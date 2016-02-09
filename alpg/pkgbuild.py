@@ -171,14 +171,3 @@ class Pkgbuild(object, metaclass=PkgbuildMeta):
 
         for field, value in lst:
             setattr(self, field, value)
-
-
-if __name__ == '__main__':
-    pkg = Pkgbuild(
-        pkgname='12',
-        pkgver='12.31')
-    print(pkg.pkgname)
-    print(pkg.arch)
-    pkg.arch = 'foo'
-    print(pkg.arch)
-    print(pkg)
