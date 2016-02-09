@@ -32,10 +32,11 @@ def make_package(pkgbuild, install):
 @click.command()
 @click.argument('type')
 @click.argument('name')
-@click.option('--author')
+@click.option('--maintainer')
+@click.option('--contributor', multiple=True)
 @click.option('--make', '-m', is_flag=True)
 @click.option('--install', '-i', is_flag=True)
-def cli(type, name, author, make, install):
+def cli(type, name, maintainer, contributor, make, install):
     try:
         module = importlib.import_module('.adaptor.%s' % type, __package__)
     except ImportError as e:
@@ -48,8 +49,11 @@ def cli(type, name, author, make, install):
         click.echo(e)
         sys.exit(1)
 
-    if author is not None:
-        pkgbuild.author = author
+    if maintainer:
+        pkgbuild.maintainer = maintainer
+
+    if contributor:
+        pkgbuild.contributor = contributor
 
     if make or install:
         make_package(pkgbuild, install)

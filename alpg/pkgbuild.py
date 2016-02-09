@@ -4,6 +4,10 @@ import textwrap
 from alpg.exception import PipkgException
 
 
+def format_comment(name, value):
+    return '# %s: %s' % (name.capitalize(), value)
+
+
 class PkgbuildError(PipkgException):
     pass
 
@@ -70,7 +74,7 @@ class Single(Field):
 class Comment(Single):
 
     def format(self, value):
-        return '# %s: %s' % (self.name.capitalize(), value)
+        return format_comment(self.name.capitalize(), value)
 
 
 class Code(Single):
@@ -110,6 +114,12 @@ class Multi(Field):
                                                  for v in value)))
 
 
+class MultiComment(Multi):
+
+    def format(self, value):
+        return '\n'.join(format_comment(self.name, v) for v in value)
+
+
 class PkgbuildMeta(type):
 
     def __new__(cls, name, bases, attrs):
@@ -127,8 +137,8 @@ class Pkgbuild(object, metaclass=PkgbuildMeta):
 
     _field_values = None
 
-    author = Comment()
     maintainer = Comment()
+    contributor = MultiComment()
 
     pkgname = Single(required=True)
     pkgver = Version(required=True)
