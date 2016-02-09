@@ -140,6 +140,7 @@ class Pkgbuild(object, metaclass=PkgbuildMeta):
     depends = Multi()
     optdepends = Multi()
     source = Multi()
+    noextract = Multi()
 
     sha1sums = Multi()
     md5sums = Multi()
