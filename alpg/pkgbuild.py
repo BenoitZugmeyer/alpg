@@ -80,6 +80,12 @@ class Code(Single):
                                 textwrap.indent(textwrap.dedent(value), '  '))
 
 
+class Version(Single):
+
+    def format(self, value):
+        return super().format(value.replace("-", "_"))
+
+
 class Multi(Field):
 
     def cast(self, value):
@@ -125,7 +131,7 @@ class Pkgbuild(object, metaclass=PkgbuildMeta):
     maintainer = Comment()
 
     pkgname = Single(required=True)
-    pkgver = Single(required=True)
+    pkgver = Version(required=True)
     pkgrel = Single(required=True, default='1')
     pkgdesc = Single()
     arch = Multi(required=True, default=('any',))
