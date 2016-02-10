@@ -49,7 +49,7 @@ Example
     $ alpg -i nodejs eslint
 
 
-Node
+Note
 ====
 
 Everything is still experimental.  Use this at your own risk.
